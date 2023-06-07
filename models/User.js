@@ -1,4 +1,4 @@
-const { Schema, Types } = require('mongoose');
+const { Schema, model } = require('mongoose');
 const thoughtSchema = require('./Thought');
 
 const userSchema = new Schema(
@@ -16,11 +16,32 @@ const userSchema = new Schema(
             // Verifies the email address via the given Regex
             match: ['/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', 'Please enter a valid email address']
         },
-        thoughts: [thoughtSchema],
+        thoughts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Thought'
+            }
+        ],
         // Self reference
-        friends: [userSchema]
+        friends: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ]
+    },
+    {
+        toJSON: {
+            getters: true,
+            virtuals: true
+        }
     }
 );
+
+// Number of friends (virtual)
+userSchema.virtual('friendCount').get(function () {
+    return this.friends.length;
+});
 
 const User = model('user', userSchema);
 
