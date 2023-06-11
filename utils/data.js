@@ -33,7 +33,8 @@ const userData = [
 
 const thoughtData = [
     {
-        thoughtTxt: 'Today is a good day!',
+        thoughtTxt: 'Today is a great day!',
+        createdAt: Date.now,
         username: 'Orisa',
         reactions: [
             {

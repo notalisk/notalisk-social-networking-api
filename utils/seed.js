@@ -11,9 +11,13 @@ connection.once('open', async () => {
     await User.deleteMany({});
     await Thought.deleteMany({});
 
-    await Thought.collection.insertMany(thoughtData);
+    for (let i = 0; i < 3; i++) {
+        await Thought.collection.insertOne(thoughtData[i]);
+    }
 
-    console.table(thoughtData);
+
+    await User.collection.insertMany(userData);
+
     console.log('Seeds planted');
     process.exit(0);
 });
