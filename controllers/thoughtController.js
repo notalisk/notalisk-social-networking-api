@@ -32,5 +32,16 @@ module.exports = {
             console.log(err);
             return res.status(400).json(err);
         }
+    },
+
+    // delete a thought
+    async deleteThought(req, res) {
+        try {
+            await Thought.findOneAndDelete({ _id: req.params.thoughtId });
+            res.json('Thought deleted!');
+        } catch (err) {
+            console.log(err);
+            return res.status(400).json(err);
+        }
     }
 };
